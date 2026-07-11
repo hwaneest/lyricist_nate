@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lyrics — Work History</title>
+<style>
+  /* ═══ Apple design tokens (DESIGN-apple.md) ═══ */
+  :root{
+    --primary:#0066cc;           /* Action Blue */
+    --primary-focus:#0071e3;     /* Focus Blue */
+    --primary-on-dark:#2997ff;   /* Sky Link Blue */
+    --ink:#1d1d1f;
+    --ink-muted-80:#333333;
+    --ink-muted-48:#7a7a7a;
+    --body-muted:#cccccc;
+    --divider-soft:#f0f0f0;
+    --hairline:#e0e0e0;
+    --canvas:#ffffff;
+    --parchment:#f5f5f7;
+    --pearl:#fafafc;
+    --tile-dark:#272729;
+    --tile-dark-2:#2a2a2c;
+    --black:#000000;
+    --font-display:"SF Pro Display",system-ui,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",sans-serif;
+    --font-text:"SF Pro Text",system-ui,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:var(--font-text);
+    font-size:17px;line-height:1.47;letter-spacing:-0.374px; /* body 17px 규칙 */
+    background:var(--canvas);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ═══ Global nav — 44px 순수 블랙 ═══ */
+  .global-nav{
+    position:fixed;inset:0 0 auto 0;z-index:50;
+    height:44px;background:var(--black);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 24px;
+  }
+  .global-nav a{
+    color:#fff;text-decoration:none;
+    font-size:12px;line-height:1;letter-spacing:-0.12px; /* nav-link */
+  }
+  .global-nav .brand{font-weight:600}
+  .global-nav .links{display:flex;gap:24px}
+  .global-nav .links a{opacity:.85}
+  .global-nav .links a:hover{opacity:1}
+
+  /* ═══ Sub-nav — frosted parchment 52px ═══ */
+  .sub-nav{
+    position:fixed;top:44px;left:0;right:0;z-index:40;
+    height:52px;
+    background:rgba(245,245,247,.8);
+    backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid rgba(0,0,0,.08);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 24px;
+  }
+  .sub-nav .title{
+    font-family:var(--font-display);
+    font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.231px; /* tagline */
+  }
+  .sub-nav .right{display:flex;align-items:center;gap:20px}
+  .sub-nav .count{font-size:14px;letter-spacing:-0.224px;color:var(--ink-muted-48)}
+  .btn-pill{
+    background:var(--primary);color:#fff;border:none;cursor:pointer;
+    font-family:var(--font-text);font-size:14px;letter-spacing:-0.224px;line-height:1.29;
+    border-radius:9999px;padding:8px 18px;
+    transition:transform .12s ease;
+  }
+  .btn-pill:active{transform:scale(.95)}                     /* 시스템 마이크로 인터랙션 */
+  .btn-pill:focus-visible{outline:2px solid var(--primary-focus);outline-offset:2px}
+
+  /* ═══ 2단 프레임 ═══ */
+  .frame{
+    display:grid;
+    grid-template-columns:minmax(380px,1fr) 1.2fr;
+    min-height:100vh;
+    padding-top:96px;
+  }
+
+  /* ═══ 왼쪽: 인덱스 (parchment) ═══ */
+  .index{
+    background:var(--parchment);
+    border-right:1px solid var(--hairline);
+    padding:48px 0 96px;
+  }
+  .index-inner{padding:0 40px}
+  .index-heading{
+    font-family:var(--font-display);
+    font-size:40px;font-weight:600;line-height:1.1;letter-spacing:-0.28px; /* display-lg + tight */
+    margin-bottom:6px;
+  }
+  .index-sub{
+    font-size:14px;letter-spacing:-0.224px;line-height:1.43;
+    color:var(--ink-muted-48);
+    margin-bottom:36px;
+  }
+  .index-head{
+    display:grid;grid-template-columns:130px 1fr 150px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--hairline);
+    font-size:12px;font-weight:600;letter-spacing:-0.12px;
+    color:var(--ink-muted-48);
+    text-transform:uppercase;
+  }
+  .index-head .r{text-align:right}
+
+  .row{
+    display:grid;grid-template-columns:130px 1fr 150px;align-items:start;
+    width:100%;text-align:left;
+    background:transparent;border:none;cursor:pointer;
+    border-bottom:1px solid var(--hairline);
+    padding:16px 0;
+    font-family:var(--font-text);
+    color:var(--ink);
+    transition:transform .12s ease;
+  }
+  .row:active{transform:scale(.985)}
+  .row:focus-visible{outline:2px solid var(--primary-focus);outline-offset:-2px}
+  .row-date{
+    font-size:14px;font-weight:400;letter-spacing:-0.224px;line-height:1.6;
+    color:var(--ink-muted-48);
+    white-space:nowrap;
+  }
+  .row-title{
+    font-size:17px;font-weight:600;letter-spacing:-0.374px;line-height:1.24; /* body-strong */
+    padding-right:20px;word-break:keep-all;
+  }
+  .row-title small{
+    display:block;
+    font-size:14px;font-weight:400;letter-spacing:-0.224px;
+    color:var(--ink-muted-48);
+    margin-top:3px;
+  }
+  .row-tag{
+    text-align:right;
+    font-size:14px;font-weight:400;letter-spacing:-0.224px;line-height:1.6;
+    color:var(--ink-muted-80);
+    white-space:nowrap;
+  }
+  .row:hover .row-title{color:var(--primary)}
+  .row.active .row-title{color:var(--primary)}
+  .row.active .row-tag{color:var(--primary)}
+
+  /* ═══ 오른쪽: 가사 패널 (white, sticky) ═══ */
+  .panel-wrap{background:var(--canvas)}
+  .panel{
+    position:sticky;top:96px;
+    height:calc(100vh - 96px);
+    display:flex;flex-direction:column;
+  }
+  .panel-head{
+    display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:baseline;
+    padding:20px 48px;
+    border-bottom:1px solid var(--hairline);
+  }
+  .panel-head .ph-date{
+    font-size:14px;letter-spacing:-0.224px;color:var(--ink-muted-48);
+  }
+  .panel-head .ph-title{
+    font-family:var(--font-display);
+    font-size:21px;font-weight:600;letter-spacing:.231px;line-height:1.19; /* tagline */
+    text-align:center;
+  }
+  .panel-head .ph-handle{
+    font-size:14px;letter-spacing:-0.224px;
+    color:var(--primary);
+  }
+
+  .panel-body{
+    flex:1;overflow-y:auto;
+    padding:64px 48px 96px;
+    scrollbar-width:thin;
+  }
+  .panel-inner{max-width:640px;margin:0 auto}
+
+  .song-eyebrow{
+    display:inline-block;
+    background:var(--pearl);
+    border:3px solid var(--divider-soft);         /* pearl capsule — 소프트 링 */
+    color:var(--ink-muted-80);
+    border-radius:11px;
+    padding:8px 14px;
+    font-size:14px;letter-spacing:-0.224px;line-height:1.43;
+    margin-bottom:20px;
+  }
+  .song-title{
+    font-family:var(--font-display);
+    font-size:56px;font-weight:600;line-height:1.07;letter-spacing:-0.28px; /* hero-display */
+    margin-bottom:12px;word-break:keep-all;
+  }
+  .song-tagline{
+    font-family:var(--font-text);
+    font-size:24px;font-weight:300;line-height:1.5; /* lead-airy — 희소한 300 웨이트 */
+    color:var(--ink-muted-80);
+    margin-bottom:28px;word-break:keep-all;
+  }
+  .song-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:56px}
+  .chip{
+    background:var(--canvas);
+    border:1px solid var(--hairline);
+    border-radius:9999px;                          /* configurator chip 문법 */
+    padding:12px 16px;
+    font-size:14px;letter-spacing:-0.224px;line-height:1.29;
+  }
+  .chip b{font-weight:600}
+
+  /* ═══ markdown 가사 영역 ═══ */
+  .lyrics{border-top:1px solid var(--divider-soft);padding-top:48px}
+  .lyrics h2{
+    font-family:var(--font-display);
+    font-size:21px;font-weight:600;letter-spacing:.231px;line-height:1.19;
+    color:var(--primary);
+    margin:44px 0 16px;
+  }
+  .lyrics h2:first-child{margin-top:0}
+  .lyrics h3{
+    font-size:12px;font-weight:600;letter-spacing:-0.12px;
+    color:var(--ink-muted-48);text-transform:uppercase;
+    margin:36px 0 12px;
+  }
+  .lyrics p{
+    font-size:17px;font-weight:400;line-height:1.9;letter-spacing:-0.374px;
+    white-space:pre-line;word-break:keep-all;
+    margin-bottom:22px;
+  }
+  .lyrics em{font-style:normal;color:var(--ink-muted-48)}
+  .lyrics strong{font-weight:600}                  /* 강조는 700이 아닌 600 */
+  .lyrics blockquote{
+    background:var(--tile-dark);                   /* 다크 타일 = 구분선 없는 강조 */
+    color:#fff;
+    border-radius:18px;                            /* rounded.lg */
+    padding:32px;
+    margin:36px 0;
+  }
+  .lyrics blockquote p{margin:0;color:#fff}
+  .lyrics blockquote em{color:var(--body-muted)}
+  .lyrics blockquote strong{color:#fff}
+  .lyrics hr{border:none;border-top:1px solid var(--divider-soft);margin:44px 0}
+
+  .panel-note{
+    margin-top:64px;padding-top:20px;
+    border-top:1px solid var(--divider-soft);
+    font-size:12px;line-height:1.5;letter-spacing:-0.12px;
+    color:var(--ink-muted-48);
+  }
+
+  /* ═══ Footer ═══ */
+  footer{
+    background:var(--parchment);
+    border-top:1px solid var(--hairline);
+    padding:48px 24px;text-align:center;
+    font-size:12px;letter-spacing:-0.12px;line-height:1.5;
+    color:var(--ink-muted-48);
+  }
+
+  /* ═══ 반응형 ═══ */
+  @media (max-width:1068px){
+    .song-title{font-size:40px}
+  }
+  @media (max-width:834px){
+    .frame{grid-template-columns:1fr}
+    .index{border-right:none;border-bottom:1px solid var(--hairline);padding:32px 0 24px}
+    .index-inner{padding:0 24px}
+    .index-heading{font-size:34px}
+    .panel{position:static;height:auto}
+    .panel-head{padding:16px 24px}
+    .panel-head .ph-handle{display:none}
+    .panel-body{padding:40px 24px 64px}
+    .song-title{font-size:34px}
+    .song-tagline{font-size:19px}
+    .sub-nav .count{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<nav class="global-nav">
+  <a class="brand" href="#">LYRICIST</a>
+  <div class="links">
+    <a href="#">Works</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<div class="sub-nav">
+  <div class="title">작사 히스토리</div>
+  <div class="right">
+    <span class="count" id="count-label"></span>
+    <button class="btn-pill" onclick="location.href='mailto:hello@example.com'">작업 문의</button>
+  </div>
+</div>
+
+<div class="frame">
+
+  <!-- ══════════ 왼쪽: 인덱스 ══════════ -->
+  <section class="index" aria-label="작사 히스토리 목록">
+    <div class="index-inner">
+      <h1 class="index-heading">Discography</h1>
+      <p class="index-sub">곡을 선택하면 오른쪽에 가사가 표시됩니다.</p>
+      <div class="index-head">
+        <span>Date</span><span>Work</span><span class="r">Artist</span>
+      </div>
+      <div id="rows"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 오른쪽: 가사 패널 ══════════ -->
+  <section class="panel-wrap" aria-label="선택한 곡의 가사">
+    <div class="panel">
+      <div class="panel-head">
+        <span class="ph-date" id="ph-date"></span>
+        <span class="ph-title" id="ph-title"></span>
+        <span class="ph-handle" id="ph-handle"></span>
+      </div>
+      <div class="panel-body" id="panel-body"></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>© 2026 Lyricist Portfolio. 모든 가사의 저작권은 각 권리자에게 있습니다.</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ▼ 작업 데이터. lyricsMd 는 markdown 형식입니다.
+   - "## 제목"  → Action Blue 섹션 라벨 (Verse 1, Chorus 등)
+   - "### 제목" → 작은 회색 대문자 라벨
+   - "> 인용"   → 다크 타일 강조 카드 (킬링 파트)
+   - "**굵게**", "*회색*", "---" (구분선) 사용 가능
+   본인이 작사한 실제 가사를 여기에 붙여 넣으세요.
+   ═══════════════════════════════════════════════════════════ */
+const SONGS = [
+  {
+    date: "2026.03.20",
+    title: "샘플 곡 제목 A",
+    subtitle: "정규 2집 타이틀",
+    artist: "Artist One",
+    handle: "@artist.one",
+    role: "작사",
+    genre: "Dance Pop",
+    label: "레이블명",
+    tagline: "곡의 컨셉이나 작업 노트를 한두 문장으로 적는 자리입니다.",
+    lyricsMd: `## Verse 1
+(여기에 1절 가사를 붙여 넣으세요)
+줄바꿈은 그대로 유지됩니다
+한 줄씩 적으면 됩니다
+
+## Pre-Chorus
+(프리코러스 가사)
+
+## Chorus
+(후렴 가사)
+
+> **대표 라인이나 킬링 파트는
+> 이렇게 다크 타일로 강조할 수 있어요**
+
+## Verse 2
+(2절 가사)
+
+---
+
+### Credits
+*작사: 본인 이름 · 작곡: OOO · 편곡: OOO*`
+  },
+  {
+    date: "2026.01.09",
+    title: "샘플 곡 제목 B",
+    subtitle: "디지털 싱글",
+    artist: "Artist Two",
+    handle: "@artist.two",
+    role: "작사 · 공동작곡",
+    genre: "R&B",
+    label: "레이블명",
+    tagline: "밤 드라이브를 테마로 한 미디엄 템포 R&B.",
+    lyricsMd: `## Intro
+(인트로 가사)
+
+## Verse 1
+(가사 내용)
+
+## Chorus
+(후렴 가사)
+
+### Note
+*이 곡에서 시도한 표현이나 작업 비하인드를
+메모처럼 남길 수도 있습니다.*`
+  },
+  {
+    date: "2025.10.14",
+    title: "샘플 곡 제목 C",
+    subtitle: "미니 3집 수록곡",
+    artist: "Artist One",
+    handle: "@artist.one",
+    role: "작사",
+    genre: "Pop Ballad",
+    label: "레이블명",
+    tagline: "여름의 끝을 붙잡는 가사.",
+    lyricsMd: `## Verse 1
+(가사 내용)
+
+## Chorus
+(후렴 가사)`
+  },
+  {
+    date: "2025.05.02",
+    title: "샘플 곡 제목 D",
+    subtitle: "드라마 OST Part.2",
+    artist: "Artist Three",
+    handle: "@artist.three",
+    role: "작사",
+    genre: "OST Ballad",
+    label: "레이블명",
+    tagline: "드라마 서사에 맞춘 발라드.",
+    lyricsMd: `## Verse 1
+(가사 내용)
+
+## Chorus
+(후렴 가사)`
+  },
+  {
+    date: "2024.11.24",
+    title: "샘플 곡 제목 E",
+    subtitle: "데뷔 싱글",
+    artist: "Artist Four",
+    handle: "@artist.four",
+    role: "작사",
+    genre: "Hip-hop",
+    label: "레이블명",
+    tagline: "첫 상업 발매 작업.",
+    lyricsMd: `## Verse 1
+(가사 내용)
+
+## Hook
+(훅 가사)`
+  }
+];
+
+/* ── 초소형 markdown 렌더러 ── */
+function renderMd(md){
+  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const inline = s => s
+    .replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g,"<em>$1</em>");
+  return md.trim().split(/\n{2,}/).map(b=>{
+    const t = b.trim();
+    if(/^---+$/.test(t)) return "<hr>";
+    if(t.startsWith("### ")) return `<h3>${inline(esc(t.slice(4)))}</h3>`;
+    if(t.startsWith("## "))  return `<h2>${inline(esc(t.slice(3)))}</h2>`;
+    if(t.startsWith(">")){
+      const inner = t.split("\n").map(l=>l.replace(/^>\s?/,"")).join("\n");
+      return `<blockquote><p>${inline(esc(inner))}</p></blockquote>`;
+    }
+    return `<p>${inline(esc(t))}</p>`;
+  }).join("");
+}
+
+/* ── 렌더링 ── */
+const rowsEl = document.getElementById("rows");
+let activeIdx = 0;
+
+function renderRows(){
+  rowsEl.innerHTML = "";
+  SONGS.forEach((s,i)=>{
+    const btn = document.createElement("button");
+    btn.className = "row" + (i===activeIdx ? " active" : "");
+    btn.innerHTML = `
+      <span class="row-date">${s.date}</span>
+      <span class="row-title">${s.title}<small>${s.subtitle}</small></span>
+      <span class="row-tag">${s.artist}</span>`;
+    btn.onclick = ()=>{ activeIdx = i; renderRows(); renderPanel(); };
+    rowsEl.appendChild(btn);
+  });
+  document.getElementById("count-label").textContent = `총 ${SONGS.length}곡`;
+}
+
+function renderPanel(){
+  const s = SONGS[activeIdx];
+  document.getElementById("ph-date").textContent = s.date;
+  document.getElementById("ph-title").textContent = s.title;
+  document.getElementById("ph-handle").textContent = s.handle;
+
+  document.getElementById("panel-body").innerHTML = `
+    <div class="panel-inner">
+      <span class="song-eyebrow">${s.subtitle} · ${s.role}</span>
+      <h2 class="song-title">${s.title}</h2>
+      <p class="song-tagline">${s.tagline}</p>
+      <div class="song-meta">
+        <span class="chip"><b>Artist</b>&nbsp; ${s.artist}</span>
+        <span class="chip"><b>Genre</b>&nbsp; ${s.genre}</span>
+        <span class="chip"><b>Label</b>&nbsp; ${s.label}</span>
+      </div>
+      <div class="lyrics">${renderMd(s.lyricsMd)}</div>
+      <div class="panel-note">본 페이지의 가사는 포트폴리오 열람 목적으로 게시되었으며, 저작권은 해당 권리자에게 있습니다.</div>
+    </div>
+  `;
+  document.getElementById("panel-body").scrollTop = 0;
+}
+
+renderRows();
+renderPanel();
+</script>
+</body>
+</html>

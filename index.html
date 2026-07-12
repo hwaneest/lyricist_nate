@@ -34,16 +34,16 @@
     -webkit-font-smoothing:antialiased;
   }
 
-  /* ═══ Global nav — 44px 순수 블랙 ═══ */
+  /* ═══ Global nav — 64px 순수 블랙 ═══ */
   .global-nav{
     position:fixed;inset:0 0 auto 0;z-index:50;
-    height:44px;background:var(--black);
+    height:64px;background:var(--black);
     display:flex;align-items:center;justify-content:space-between;
     padding:0 24px;
   }
   .global-nav a{
     color:#fff;text-decoration:none;
-    font-size:12px;line-height:1;letter-spacing:-0.12px; /* nav-link */
+    font-size:19px;line-height:1;letter-spacing:-0.12px; /* nav-link */
   }
   .global-nav .brand{font-weight:600}
   .global-nav .links{display:flex;gap:24px}
@@ -52,7 +52,7 @@
 
   /* ═══ Sub-nav — frosted parchment 52px ═══ */
   .sub-nav{
-    position:fixed;top:44px;left:0;right:0;z-index:40;
+    position:fixed;top:64px;left:0;right:0;z-index:40;
     height:52px;
     background:rgba(245,245,247,.8);
     backdrop-filter:saturate(180%) blur(20px);
@@ -81,7 +81,7 @@
     display:grid;
     grid-template-columns:minmax(380px,1fr) 1.2fr;
     min-height:100vh;
-    padding-top:96px;
+    padding-top:116px;
   }
 
   /* ═══ 왼쪽: 인덱스 (parchment) ═══ */
@@ -151,8 +151,8 @@
   /* ═══ 오른쪽: 가사 패널 (white, sticky) ═══ */
   .panel-wrap{background:var(--canvas)}
   .panel{
-    position:sticky;top:96px;
-    height:calc(100vh - 96px);
+    position:sticky;top:116px;
+    height:calc(100vh - 116px);
     display:flex;flex-direction:column;
   }
   .panel-head{
@@ -285,16 +285,14 @@
 <body>
 
 <nav class="global-nav">
-  <a class="brand" href="#">LYRICIST</a>
+  <a class="brand" href="#">Lyricist Page - 작사가 Nate</a>
   <div class="links">
-    <a href="#">Works</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
+    <a href="contact.html">Contact</a>
   </div>
 </nav>
 
 <div class="sub-nav">
-  <div class="title">작사가 Nate</div>
+  <div class="title"></div>
   <div class="right">
     <span class="count" id="count-label"></span>
     <button class="btn-pill" onclick="location.href='mailto:lyricist114@gmail.com'">작업 문의</button>
@@ -342,14 +340,14 @@
    ═══════════════════════════════════════════════════════════ */
 const SONGS = [
   {
-    date: "2026.03.20",
-    title: "샘플 곡 제목 A",
-    subtitle: "정규 2집 타이틀",
-    artist: "Artist One",
+    date: "2026.02.01",
+    title: "Reminiscent (*원곡: 이루마)",
+    subtitle: "시안 작업",
+    artist: "이루마",
     handle: "@playricist",
     role: "작사",
-    genre: "Dance Pop",
-    label: "레이블명",
+    genre: "Piano",
+    label: "(기타)",
     tagline: "곡의 컨셉이나 작업 노트를 한두 문장으로 적는 자리입니다.",
     lyricsMd: `## Verse 1
 (여기에 1절 가사를 붙여 넣으세요)
@@ -374,15 +372,15 @@ const SONGS = [
 *작사: 본인 이름 · 작곡: OOO · 편곡: OOO*`
   },
   {
-    date: "2026.01.09",
-    title: "샘플 곡 제목 B",
-    subtitle: "디지털 싱글",
-    artist: "Artist Two",
-    handle: "@artist.two",
-    role: "작사 · 공동작곡",
-    genre: "R&B",
-    label: "레이블명",
-    tagline: "밤 드라이브를 테마로 한 미디엄 템포 R&B.",
+    date: "2026.01.01",
+    title: "River Flows In You (*원곡: 이루마)",
+    subtitle: "시안 작업",
+    artist: "이루마",
+    handle: "@playricist",
+    role: "작사",
+    genre: "Piano",
+    label: "(기타)",
+    tagline: "곡의 컨셉이나 작업 노트를 한두 문장으로 적는 자리입니다.",
     lyricsMd: `## Intro
 (인트로 가사)
 

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — Lyricist Page</title>
+<style>
+  /* ═══ Apple design tokens (index.html과 동일) ═══ */
+  :root{
+    --primary:#0066cc;
+    --primary-focus:#0071e3;
+    --primary-on-dark:#2997ff;
+    --ink:#1d1d1f;
+    --ink-muted-80:#333333;
+    --ink-muted-48:#7a7a7a;
+    --body-muted:#cccccc;
+    --divider-soft:#f0f0f0;
+    --hairline:#e0e0e0;
+    --canvas:#ffffff;
+    --parchment:#f5f5f7;
+    --pearl:#fafafc;
+    --tile-dark:#272729;
+    --black:#000000;
+    --font-display:"SF Pro Display",system-ui,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",sans-serif;
+    --font-text:"SF Pro Text",system-ui,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:var(--font-text);
+    font-size:17px;line-height:1.47;letter-spacing:-0.374px;
+    background:var(--canvas);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ═══ Global nav ═══ */
+  .global-nav{
+    position:fixed;inset:0 0 auto 0;z-index:50;
+    height:64px;background:var(--black);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 24px;
+  }
+  .global-nav a{
+    color:#fff;text-decoration:none;
+    font-size:19px;line-height:1;letter-spacing:-0.12px;
+  }
+  .global-nav .brand{font-weight:600}
+  .global-nav .links{display:flex;gap:24px}
+  .global-nav .links a{opacity:.85}
+  .global-nav .links a:hover{opacity:1}
+  .global-nav .links a.active{opacity:1;color:var(--primary-on-dark)}
+
+  /* ═══ Contact 본문 ═══ */
+  main{
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:160px 24px 96px;
+    background:var(--parchment);
+  }
+  .contact-card{
+    width:100%;max-width:560px;
+    background:var(--canvas);
+    border:1px solid var(--hairline);
+    border-radius:24px;
+    padding:56px 48px;
+    text-align:center;
+  }
+  .contact-eyebrow{
+    display:inline-block;
+    background:var(--pearl);
+    border:1px solid var(--divider-soft);
+    color:var(--ink-muted-80);
+    border-radius:9999px;
+    padding:8px 16px;
+    font-size:13px;letter-spacing:-0.12px;
+    margin-bottom:24px;
+  }
+  .contact-title{
+    font-family:var(--font-display);
+    font-size:24px;font-weight:600;line-height:1.15;letter-spacing:-0.28px;
+    margin-bottom:20px;
+  }
+  .contact-body{
+    font-size:20px;line-height:1.8;
+    color:var(--ink-muted-80);
+    margin-bottom:32px;
+  }
+  .contact-body + .contact-body{margin-bottom:36px}
+  .contact-list{
+    display:flex;flex-direction:column;gap:14px;
+    margin-bottom:40px;
+  }
+  .contact-row{
+    display:flex;align-items:center;gap:14px;
+    background:var(--pearl);
+    border:1px solid var(--divider-soft);
+    border-radius:14px;
+    padding:16px 20px;
+    text-decoration:none;
+    color:var(--ink);
+    transition:transform .12s ease, border-color .12s ease;
+  }
+  .contact-row:hover{border-color:var(--primary);transform:translateY(-1px)}
+  .contact-row .label{
+    font-size:12px;font-weight:600;letter-spacing:-0.12px;
+    text-transform:uppercase;color:var(--ink-muted-48);
+    min-width:64px;text-align:left;
+  }
+  .contact-row .value{
+    font-size:17px;font-weight:600;letter-spacing:-0.374px;
+    color:var(--primary);
+  }
+  .contact-sign{
+    font-size:20px;color:var(--ink-muted-48);
+  }
+  .back-link{
+    display:inline-block;margin-top:32px;
+    font-size:14px;letter-spacing:-0.224px;
+    color:var(--ink-muted-48);text-decoration:none;
+  }
+  .back-link:hover{color:var(--primary)}
+
+  @media (max-width:600px){
+    .contact-card{padding:40px 28px}
+    .contact-title{font-size:28px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="global-nav">
+  <a class="brand" href="index.html">Lyricist Page - 작사가 Nate</a>
+  <div class="links">
+    <a class="active" href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<main>
+  <div class="contact-card">
+    <span class="contact-eyebrow">Contact</span>
+    <h1 class="contact-title">안녕하세요, 작사가 Nate 입니다 🙂</h1>
+    <p class="contact-body">작사 작업 의뢰는 아래 연락처로 부탁드립니다.</p>
+
+    <div class="contact-list">
+      <a class="contact-row" href="mailto:lyricist114@gmail.com">
+        <span class="label">e-Mail</span>
+        <span class="value">lyricist114@gmail.com</span>
+      </a>
+      <a class="contact-row" href="https://instagram.com/playricist" target="_blank" rel="noopener">
+        <span class="label">DM</span>
+        <span class="value">@playricist</span>
+      </a>
+    </div>
+
+    <p class="contact-sign">감사합니다.</p>
+    <a class="back-link" href="index.html">← Discography로 돌아가기</a>
+  </div>
+</main>
+
+</body>
+</html>

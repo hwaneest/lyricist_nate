@@ -43,7 +43,7 @@
   }
   .global-nav a{
     color:#fff;text-decoration:none;
-    font-size:19px;line-height:1;letter-spacing:-0.12px; /* nav-link */
+    font-size:24px;line-height:1;letter-spacing:-0.12px; /* nav-link */
   }
   .global-nav .brand{font-weight:600}
   .global-nav .links{display:flex;gap:24px}
@@ -201,7 +201,7 @@
     color:var(--ink-muted-80);
     margin-bottom:28px;word-break:keep-all;
   }
-  .song-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:56px}
+  .song-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
   .chip{
     background:var(--canvas);
     border:1px solid var(--hairline);
@@ -212,7 +212,7 @@
   .chip b{font-weight:600}
 
   /* ═══ markdown 가사 영역 ═══ */
-  .lyrics{border-top:1px solid var(--divider-soft);padding-top:48px}
+  .lyrics{border-top:1px solid var(--divider-soft);padding-top:20px}
   .lyrics h2{
     font-family:var(--font-display);
     font-size:21px;font-weight:600;letter-spacing:.231px;line-height:1.19;
@@ -239,6 +239,7 @@
     padding:32px;
     margin:36px 0;
   }
+  .lyrics blockquote:first-child{margin-top:0}
   .lyrics blockquote p{margin:0;color:#fff}
   .lyrics blockquote em{color:var(--body-muted)}
   .lyrics blockquote strong{color:#fff}
@@ -347,29 +348,16 @@ const SONGS = [
     handle: "@playricist",
     role: "작사",
     genre: "Piano",
-    label: "(기타)",
-    tagline: "곡의 컨셉이나 작업 노트를 한두 문장으로 적는 자리입니다.",
-    lyricsMd: `## Verse 1
-(여기에 1절 가사를 붙여 넣으세요)
-줄바꿈은 그대로 유지됩니다
-한 줄씩 적으면 됩니다
+    label: "시안",
+    tagline: "잊은 줄 알았던 기억이 문득 오늘을 찾아온다.",
+    lyricsMd: `> **#회상  #헤어짐  #그리움**
 
-## Pre-Chorus
-(프리코러스 가사)
-
-## Chorus
-(후렴 가사)
-
-> **대표 라인이나 킬링 파트는
-> 이렇게 다크 타일로 강조할 수 있어요**
-
-## Verse 2
-(2절 가사)
+(작성중)
 
 ---
 
 ### Credits
-*작사: 본인 이름 · 작곡: OOO · 편곡: OOO*`
+*원곡: 이루마 · 작곡: 이루마 · 작사: Nate*`
   },
   {
     date: "2026.01.01",
@@ -379,7 +367,7 @@ const SONGS = [
     handle: "@playricist",
     role: "작사",
     genre: "Piano",
-    label: "시안",
+    label: "실제 가사",
     tagline: "사랑하는 사람이 내 안에 살아 숨 쉬고 있다.",
     lyricsMd: `Source: https://music.bugs.co.kr/track/1817704
 Lyrics by. 이루마
